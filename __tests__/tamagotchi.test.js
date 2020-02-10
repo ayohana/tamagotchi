@@ -6,6 +6,7 @@ describe('Tamagotchi', () => {
 
   beforeEach(function() {
     pet = new Tamagotchi();
+    pet.setStats();
   });
 
   afterEach(function(){
