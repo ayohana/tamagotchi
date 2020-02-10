@@ -1,9 +1,8 @@
-# _Assignment Name_
+# _Tamagotchi_
 
-#### _Brief desc of Project, 02.6.2020_
-<!-- ##### _Version 1.1 Updated 01.11.2020_ -->
+#### _Brief desc of Project, 02.10.2020_
 
-#### By _**Tiffany Siu**_
+#### By _**Tiffany Siu and Adela Darmansyah**_
 
 ## Description
 
@@ -20,7 +19,7 @@ _README under construction_
 
 ### Instructions
 
-<!-- **This page may be viewed by:**
+<!-- *This page may be viewed by:*
 
 1. Download and install Node.js from the [official website](https://nodejs.org/en/download/)
 2. Clone the [repository](https://github.com/TSiu88/beep-boop.git) from my [GitHub page](https://github.com/TSiu88)
@@ -41,7 +40,6 @@ _README under construction_
 * _Bootstrap 4.4.1_
 * _ESLint_
 * _Babel_
-* _Webpack_
 * _Jest_
 * _Markdown_
 
@@ -87,9 +85,9 @@ _Here is a preview of what the output looks like:_
 ## Test Case Example
 <!-- _Tests are done through Jest and are run from the command line prompt with `npm test`._
 _Some example tests:_
-![Snippet of an example test](img/test1.png)
+![Snippet of an example test](img/tester1.png)
 
-![Snippet of an example result](img/test2.png) -->
+![Snippet of an example result](img/tester2.png) -->
 <!-- _describe and show how to run tests with `code` examples}_ -->
 
 ## Known Bugs
@@ -104,4 +102,4 @@ _If there are any question or concerns please contact me at my [email](mailto:ts
 
 *This software is licensed under the MIT license*
 
-Copyright (c) 2020 **_Tiffany Siu_**
+Copyright (c) 2020 **_Tiffany Siu, Adela Darmansyah_**
