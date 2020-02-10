@@ -47,17 +47,22 @@ describe('Tamagotchi', () => {
     expect(pet.fatigue.value).toEqual(0);
   });
 
+  test('if stat is outside normal range, value changed to the limit for that stat', () => {
+    expect(pet.checkRange(-5)).toEqual(0);
+    expect(pet.checkRange(105)).toEqual(100);
+  });
+
   test('warn player that pet may die when any of the stats are within 10 points from the limit', () => {
     pet.energy.value = 20;
     pet.hunger.value = 75;
     pet.fatigue.value = 25;
     pet.happiness.value = 45;
     jest.advanceTimersByTime(10001);
+    pet.checkStats();
     expect(pet.energy.value).toEqual(10);
     expect(pet.hunger.value).toEqual(90);
     expect(pet.fatigue.value).toEqual(30);
     expect(pet.happiness.value).toEqual(40);
-    pet.checkStats();
   });
 
   test('pet dies when any of the stats reaches the limit', () => {
@@ -66,10 +71,10 @@ describe('Tamagotchi', () => {
     pet.fatigue.value = 35;
     pet.happiness.value = 5;
     jest.advanceTimersByTime(10001);
+    pet.checkStats();
     expect(pet.energy.value).toEqual(30);
     expect(pet.hunger.value).toEqual(100);
     expect(pet.fatigue.value).toEqual(40);
     expect(pet.happiness.value).toEqual(0);
-    pet.checkStats();
   });
 });

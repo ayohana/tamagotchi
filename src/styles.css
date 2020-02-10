@@ -1,0 +1,10 @@
+#pet-image {
+  width: 500px;
+  height: 500px;
+  background-image: url("../src/img/pooping-pet.gif");
+  background-repeat: no-repeat;
+}
+
+#gameOver {
+  display: none;
+}

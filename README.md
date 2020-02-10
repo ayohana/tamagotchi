@@ -63,6 +63,9 @@ _README under construction_
 * _Player clicks "sleep" to decrease fatigue level_
   * _Example Input: click "sleep"_
   * _Example Output: fatigue level=0, time=60secs passed_
+* _If stat is outside the normal range for that stat, set stat to the limit instead_
+  * _Example Input: -5_
+  * _Example Output: 0_
 * _If any of the stats are within 10 points from the limit, warning that pet may die will show_
   * _Example Input: energy=10, hunger=90, fatigue=30, happiness=40
   * _Example Output: "Warning! Pet may die!"

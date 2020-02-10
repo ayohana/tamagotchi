@@ -1,5 +1,7 @@
 import { Stats } from '../src/stats';
 
+let timer;
+
 export class Tamagotchi {
   constructor(){
     this.energy = new Stats("energy", 100, 0);
@@ -7,22 +9,25 @@ export class Tamagotchi {
     this.fatigue = new Stats("fatigue", 0, 100);
     this.happiness = new Stats("happiness", 50, 0);
     this.statsArray = [this.energy, this.hunger, this.fatigue, this.happiness];
+    this.isDead = false;
   }
 
   setStats() {
-    setInterval(() => {
+    timer = setInterval(() => {
       this.energy.value -= 10;
       this.hunger.value += 15;
       this.fatigue.value += 5;
       this.happiness.value -= 5;
       this.statsArray = [this.energy, this.hunger, this.fatigue, this.happiness];
       this.checkStats();
-    }, 10000);
+    }, 1000);
   }
 
   feed(){
     this.hunger.value -= 25;
+    this.energy.value += 10;
     this.statsArray[1].value = this.hunger.value;
+    this.statsArray[0].value = this.energy.value;
     this.checkStats();
   }
 
@@ -36,7 +41,9 @@ export class Tamagotchi {
 
   sleep(){
     this.fatigue.value = 0;
+    this.energy.value += 20;
     this.statsArray[2].value = this.fatigue.value;
+    this.statsArray[0].value = this.energy.value;
     this.checkStats();
   }
 
@@ -55,6 +62,8 @@ export class Tamagotchi {
     }
     if (deathStatCount >= 2) {
       console.log("Pet's dead");
+      this.isDead = true;
+      clearInterval(timer);
     } else{
       console.log("all is good");
     }
