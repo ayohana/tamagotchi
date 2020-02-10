@@ -56,15 +56,21 @@ _README under construction_
 * _The program has a timer that decreases levels for the tamagotchi._
   * _Example Input: time: -10 secs_
   * _Example Output: energy -10, hunger +15, fatigue +5, happiness -5_
-* _Player clicks "feed" to increase hunger level_
+* _Player clicks "feed" to decrease hunger level_
   * _Example Input: click "feed"_
   * _Example Output: hunger -25_
-* _Player clicks "play" to increase happiness level_
+* _Player clicks "play" to increase happiness level and decrease energy level_
   * _Example Input: click "play"_
   * _Example Output: happiness + 20, energy -15_
-* _Player clicks "sleep" to decrease fatigue level _
+* _Player clicks "sleep" to decrease fatigue level_
   * _Example Input: click "sleep"_
   * _Example Output: fatigue level=0, time=60secs passed_
+* _If any of the stats are within 10 points from the limit, warning that pet may die will show_
+  * _Example Input: energy=10, hunger=90, fatigue=30, happiness=40
+  * _Example Output: "Warning! Pet may die!"
+* _If any of the stats reaches the limit, pet dies_
+  * _Example Input: energy=30, hunger=100, fatigue = 40, happiness=0
+  * _Example Output: Alert "Pet has died."
 
 ## Screenshots
 
