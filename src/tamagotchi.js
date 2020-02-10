@@ -2,10 +2,11 @@ import { Stats } from '../src/stats';
 
 export class Tamagotchi {
   constructor(){
-    this.energy = new Stats("energy", 100);
-    this.hunger = new Stats("hunger", 0);
-    this.fatigue = new Stats("fatigue", 0);
-    this.happiness = new Stats("happiness", 50);
+    this.energy = new Stats("energy", 100, 0);
+    this.hunger = new Stats("hunger", 0, 100);
+    this.fatigue = new Stats("fatigue", 0, 100);
+    this.happiness = new Stats("happiness", 50, 0);
+    this.statsArray = [this.energy, this.hunger, this.fatigue, this.happiness];
   }
 
   setStats() {
@@ -14,59 +15,44 @@ export class Tamagotchi {
       this.hunger.value += 15;
       this.fatigue.value += 5;
       this.happiness.value -= 5;
+      this.statsArray = [this.energy, this.hunger, this.fatigue, this.happiness];
     }, 10000);
   }
 
   feed(){
     this.hunger.value -= 25;
-    if (this.hunger.value < 90){
-      this.hunger.status = "normal";
-    }
+    this.statsArray[1].value = this.hunger.value;
   }
 
   play(){
     this.happiness.value += 20;
     this.energy.value -= 15;
-    if (this.happiness.value > 10){
-      this.happiness.status = "normal";
-    }
-    if (this.energy.value > 10){
-      this.energy.status = "normal";
-    }
+    this.statsArray[3].value = this.happiness.value;
+    this.statsArray[0].value = this.energy.value;
   }
 
   sleep(){
     this.fatigue.value = 0;
-    if (this.fatigue.value < 90){
-      this.fatigue.status = "normal";
-    }
+    this.statsArray[2].value = this.fatigue.value;
   }
 
   checkStats(){
-    if(this.energy.value <= 10){
-      this.energy.status = "low";
-    } else if (this.hunger.value >= 90){
-      this.hunger.status = "low";
-    } else if (this.fatigue.value >= 90){
-      this.fatigue.status = "low";
-    } else if (this.happiness.value <= 10){
-      this.happiness.status = "low";
+    let deathStatCount = 0;
+    for (let i = 0; i < this.statsArray.length; i++) {
+      if (this.statsArray[i].value === this.statsArray[i].limit) {
+        console.log("it was low in hunger or fatigue");
+        deathStatCount++;
+      } else if (this.statsArray[i].limit === 100 && this.statsArray[i].value >= 90) {
+        console.log("low stats!");
+      } else if (this.statsArray[i].limit === 0 && this.statsArray[i].value <= 10) {
+        console.log("low stats!");
+      }
     }
-
-
-    // if (this.lowStats.includes("low")){
-    //   let lowStatCount = [];
-    //   for(let i=0; i < this.lowStats.length; i++){
-    //     if (this.lowStats[i] === "low"){
-    //       lowStatCount.push({id: i, value:this.lowStats[i]});
-    //     }
-    //   }
-    //   if (lowStatCount.length == 1){
-    //     alert("Warning! Pet may die!");
-    //   } else if (lowStatCount.length > 1){
-    //     this.lowStats[lowStatCount[0]]
-    //   }
-      
-    // } else if (this.energy === 0 || this.hunger === 100 || this.fatigue >= 90 || this.happiness <= 10)
+    if (deathStatCount >= 2) {
+      console.log("Pet's dead");
+    } else{
+      console.log("all is good");
+    }
+   
   }
 }

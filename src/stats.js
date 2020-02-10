@@ -1,7 +1,7 @@
 export class Stats {
-  constructor(name, value){
+  constructor(name, value, limit){
     this.name = name;
-    this.status = "normal";
     this.value = value;
+    this.limit = limit;
   }
 }
