@@ -9,9 +9,10 @@ export class Game {
     this.gameCount++;
   }
 
-  findTamagotchi(tamagotchi) {
+  findTamagotchi(id) {
     for (let i = 0; i < this.games.length; i++) {
-      if (this.games[i].id === tamagotchi.id) {
+      console.log(this.games[i].id);
+      if (this.games[i].id === parseInt(id)) {
         return this.games[i];
       }
     }

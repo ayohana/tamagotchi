@@ -1,7 +1,7 @@
 import { Stats } from '../src/stats';
 
 let timer;
-let idCount = 0;
+let idCount = -1;
 
 export class Tamagotchi {
   constructor(){
@@ -15,8 +15,8 @@ export class Tamagotchi {
   }
 
   assignID() {
-    this.id = idCount;
     idCount++;
+    return idCount;
   }
 
   setStats() {

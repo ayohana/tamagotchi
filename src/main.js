@@ -6,17 +6,17 @@ import { Tamagotchi } from '../src/tamagotchi';
 import { Game } from '../src/game';
 
 function updateStats(pet){
-  $("#energy").text(pet.energy.value);
-  $("#hunger").text(pet.hunger.value);
-  $("#fatigue").text(pet.fatigue.value);
-  $("#happiness").text(pet.happiness.value);
+  $(`#pet${pet.id}Energy`).text(pet.energy.value);
+  $(`#pet${pet.id}Hunger`).text(pet.hunger.value);
+  $(`#pet${pet.id}Fatigue`).text(pet.fatigue.value);
+  $(`#pet${pet.id}Happiness`).text(pet.happiness.value);
   if(pet.isDead){
-    $("#petMessage").text("Your pet has died.");
-    $("#buttonRow").hide();
+    $(`#pet${pet.id}PetMessage`).text("Your pet has died.");
+    $(`#pet${pet.id}buttonSection`).hide();
     $("#gameOver").show();
   } else{
-    $("#petMessage").text("");
-    $("#buttonRow").show();
+    $(`#pet${pet.id}PetMessage`).text("");
+    $(`#pet${pet.id}buttonSection`).show();
     $("#gameOver").hide();
   }
 }
@@ -112,21 +112,21 @@ function createButtonElements(name){
   let feedButton = document.createElement('button');
   feedButton.id = name + "FeedButton";
   feedButton.innerText = "FEED";
-  feedButton.className = "btn btn-lg btn-primary";
+  feedButton.className = "btn btn-lg btn-primary feedButton";
   feedButton.type = "button";
   buttonColDiv.appendChild(feedButton);
 
   let playButton = document.createElement('button');
   playButton.id = name + "PlayButton";
   playButton.innerText = "PLAY";
-  playButton.className = "btn btn-lg btn-primary";
+  playButton.className = "btn btn-lg btn-primary playButton";
   playButton.type = "button";
   buttonColDiv.appendChild(playButton);
 
   let sleepButton = document.createElement('button');
   sleepButton.id = name + "SleepButton";
   sleepButton.innerText = "SLEEP";
-  sleepButton.className = "btn btn-lg btn-primary";
+  sleepButton.className = "btn btn-lg btn-primary sleepButton";
   sleepButton.type = "button";
   buttonColDiv.appendChild(sleepButton);
 
@@ -157,27 +157,42 @@ $(document).ready(function(){
         game.addTamagotchi(createPet(name));
         createGameDiv(name);
       }
+
+      $(".feedButton").click(function(event){
+        event.preventDefault();
+        let stringID = this.id.slice(3,4);
+
+        let petObject = game.findTamagotchi(stringID);
+        petObject.feed();
+        updateStats(petObject);
+      });
+
+      $(".playButton").click(function(event){
+        event.preventDefault();
+        let stringID = this.id.slice(3,4);
+
+        let petObject = game.findTamagotchi(stringID);
+        petObject.play();
+        updateStats(petObject);
+      });
+    
+      $(".sleepButton").click(function(event){
+        event.preventDefault();
+        let stringID = this.id.slice(3,4);
+
+        let petObject = game.findTamagotchi(stringID);
+        petObject.sleep();
+        updateStats(petObject);
+      });
+
+
     }
 
   });
 
-  $("#feedButton").click(function(event){
-    event.preventDefault();
-    pet.feed();
-    updateStats(pet);
-  });
+  
 
-  $("#playButton").click(function(event){
-    event.preventDefault();
-    pet.play();
-    updateStats(pet);
-  });
-
-  $("#sleepButton").click(function(event){
-    event.preventDefault();
-    pet.sleep();
-    updateStats(pet);
-  });
+  
 
   $("#restartGame").click(function(event){
     event.preventDefault();
