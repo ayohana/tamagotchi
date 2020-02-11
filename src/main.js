@@ -73,9 +73,10 @@ function createGameDiv(name){
   imageDiv.id = name + "imageDiv";
   gameSectionDiv.appendChild(imageDiv);
 
-  let petStatsDiv = document.createElement('div');
-  petStatsDiv.className = "petStatsDiv col-6";
-  petStatsDiv.id = name + "petStatsDiv";
+  // let petStatsDiv = document.createElement('div');
+  // petStatsDiv.className = "petStatsDiv col-6";
+  // petStatsDiv.id = name + "petStatsDiv";
+  let petStatsDiv = createStatsElements(name);
   gameSectionDiv.appendChild(petStatsDiv);
 
   let petImageDiv = document.createElement('div');
@@ -83,13 +84,32 @@ function createGameDiv(name){
   petImageDiv.id = name + "petImageDiv";
   imageDiv.appendChild(petImageDiv);
 
-  let buttonColDiv = document.createElement('div');
-  buttonColDiv.className = "col-md-6";
+  // let buttonColDiv = document.createElement('div');
+  // buttonColDiv.className = "col-md-6";
+  let buttonColDiv = createButtonElements(name);
   buttonSectionDiv.appendChild(buttonColDiv);
 
   $("#moreGames").append(gameScreenDiv);
 }
 
+function createStatsElements(name){
+  let petStatsDiv = document.createElement('div');
+  petStatsDiv.className = "petStatsDiv col-6";
+  petStatsDiv.id = name + "petStatsDiv";
+
+
+
+  return petStatsDiv;
+}
+
+function createButtonElements(name){
+  let buttonColDiv = document.createElement('div');
+  buttonColDiv.className = "col-md-6";
+
+  
+
+  return buttonColDiv;
+}
 
 $(document).ready(function(){
   let pet;
