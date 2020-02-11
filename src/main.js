@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import $ from 'jquery';
 import { Tamagotchi } from '../src/tamagotchi';
+import { Game } from '../src/game';
 
 function updateStats(pet){
   $("#energy").text(pet.energy.value);
@@ -53,20 +54,28 @@ function createPet(pet) {
     image.src = response.data.images.downsized_large.url;
     $("#pet-image").append(image);
   };
+
+  return pet;
 }
+
 
 $(document).ready(function(){
   let pet;
+  let game = new Game();
 
   $("#startButton").click(function(event){
     event.preventDefault();
 
     const numberOfPets = document.getElementById("numberOfPets");
+    const petCount = parseInt($("#numberOfPets").val());
 
     if (!numberOfPets.checkValidity()) {
       console.error("Enter a valid number!");
     } else {
-      createPet(pet);
+      for (let i = 0; i <= petCount-1; i++) {
+        let name = `pet${i}`;
+        game.addTamagotchi(createPet(name));
+      }
     }
 
   });

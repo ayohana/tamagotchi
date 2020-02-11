@@ -1,15 +1,22 @@
 import { Stats } from '../src/stats';
 
 let timer;
+let idCount = 0;
 
 export class Tamagotchi {
   constructor(){
+    this.id = this.assignID();
     this.energy = new Stats("energy", 100, 0);
     this.hunger = new Stats("hunger", 0, 100);
     this.fatigue = new Stats("fatigue", 0, 100);
     this.happiness = new Stats("happiness", 50, 0);
     this.statsArray = [this.energy, this.hunger, this.fatigue, this.happiness];
     this.isDead = false;
+  }
+
+  assignID() {
+    this.id = idCount;
+    idCount++;
   }
 
   setStats() {
