@@ -30,6 +30,10 @@ function createPet(pet) {
     updateStats(pet);
   }, 5000);
 
+  return pet;
+}
+
+function generateRandomImage(name) {
   let request = new XMLHttpRequest();
   const url = `https://api.giphy.com/v1/gifs/random?api_key=${process.env.API_KEY}&tag=tamagotchi&rating=PG-13`;
 
@@ -47,10 +51,8 @@ function createPet(pet) {
     let image = new Image();
     image.id = "petGif";
     image.src = response.data.images.downsized_large.url;
-    $("#pet-image").append(image);
+    $(eval(`${name}petImageDiv`)).append(image);
   };
-
-  return pet;
 }
 
 function createGameDiv(name){
@@ -73,19 +75,15 @@ function createGameDiv(name){
   imageDiv.id = name + "imageDiv";
   gameSectionDiv.appendChild(imageDiv);
 
-  // let petStatsDiv = document.createElement('div');
-  // petStatsDiv.className = "petStatsDiv col-6";
-  // petStatsDiv.id = name + "petStatsDiv";
   let petStatsDiv = createStatsElements(name);
   gameSectionDiv.appendChild(petStatsDiv);
 
   let petImageDiv = document.createElement('div');
   petImageDiv.className = "petImageDiv";
   petImageDiv.id = name + "petImageDiv";
+  generateRandomImage(name);
   imageDiv.appendChild(petImageDiv);
 
-  // let buttonColDiv = document.createElement('div');
-  // buttonColDiv.className = "col-md-6";
   let buttonColDiv = createButtonElements(name);
   buttonSectionDiv.appendChild(buttonColDiv);
 
@@ -97,7 +95,12 @@ function createStatsElements(name){
   petStatsDiv.className = "petStatsDiv col-6";
   petStatsDiv.id = name + "petStatsDiv";
 
-
+  petStatsDiv.innerHTML = `<h2>PET STATS</h2><hr>
+    <h3>Energy: <span id="${name}Energy"></span>/100</h3>
+    <h3>Hunger: <span id="${name}Hunger"></span>/100</h3>
+    <h3>Fatigue: <span id="${name}Fatigue"></span>/100</h3>
+    <h3>Happiness: <span id="${name}Happiness"></span>/100</h3>
+    <h3><span id="${name}PetMessage"></span></h3>`;
 
   return petStatsDiv;
 }
@@ -106,7 +109,26 @@ function createButtonElements(name){
   let buttonColDiv = document.createElement('div');
   buttonColDiv.className = "col-md-6";
 
-  
+  let feedButton = document.createElement('button');
+  feedButton.id = name + "FeedButton";
+  feedButton.innerText = "FEED";
+  feedButton.className = "btn btn-lg btn-primary";
+  feedButton.type = "button";
+  buttonColDiv.appendChild(feedButton);
+
+  let playButton = document.createElement('button');
+  playButton.id = name + "PlayButton";
+  playButton.innerText = "PLAY";
+  playButton.className = "btn btn-lg btn-primary";
+  playButton.type = "button";
+  buttonColDiv.appendChild(playButton);
+
+  let sleepButton = document.createElement('button');
+  sleepButton.id = name + "SleepButton";
+  sleepButton.innerText = "SLEEP";
+  sleepButton.className = "btn btn-lg btn-primary";
+  sleepButton.type = "button";
+  buttonColDiv.appendChild(sleepButton);
 
   return buttonColDiv;
 }
