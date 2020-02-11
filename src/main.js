@@ -24,11 +24,6 @@ function updateStats(pet){
 function createPet(pet) {
   pet = new Tamagotchi();
 
-  $("#startScreen").hide();
-  $("#gameScreen").show();
-  $("#buttonRow").show();
-  $("#gameOver").hide();
-
   updateStats(pet);
   pet.setStats();
   setInterval(() => {
@@ -58,6 +53,43 @@ function createPet(pet) {
   return pet;
 }
 
+function createGameDiv(name){
+  let gameScreenDiv = document.createElement('div');
+  gameScreenDiv.id = name;
+  gameScreenDiv.className = "gameScreen";
+
+  let gameSectionDiv = document.createElement('div');
+  gameSectionDiv.className = "gameSection";
+  gameSectionDiv.id = name + "gameSection";
+  gameScreenDiv.appendChild(gameSectionDiv);
+
+  let buttonSectionDiv = document.createElement('div');
+  buttonSectionDiv.className = "buttonSection row";
+  buttonSectionDiv.id = name + "buttonSection";
+  gameScreenDiv.appendChild(buttonSectionDiv);
+
+  let imageDiv = document.createElement('div');
+  imageDiv.className = "imageDiv";
+  imageDiv.id = name + "imageDiv";
+  gameSectionDiv.appendChild(imageDiv);
+
+  let petStatsDiv = document.createElement('div');
+  petStatsDiv.className = "petStatsDiv col-6";
+  petStatsDiv.id = name + "petStatsDiv";
+  gameSectionDiv.appendChild(petStatsDiv);
+
+  let petImageDiv = document.createElement('div');
+  petImageDiv.className = "petImageDiv";
+  petImageDiv.id = name + "petImageDiv";
+  imageDiv.appendChild(petImageDiv);
+
+  let buttonColDiv = document.createElement('div');
+  buttonColDiv.className = "col-md-6";
+  buttonSectionDiv.appendChild(buttonColDiv);
+
+  $("#moreGames").append(gameScreenDiv);
+}
+
 
 $(document).ready(function(){
   let pet;
@@ -72,9 +104,16 @@ $(document).ready(function(){
     if (!numberOfPets.checkValidity()) {
       console.error("Enter a valid number!");
     } else {
+
+      $("#startScreen").hide();
+      $("#gameScreen").show();
+      $("#buttonRow").show();
+      $("#gameOver").hide();
+
       for (let i = 0; i <= petCount-1; i++) {
         let name = `pet${i}`;
         game.addTamagotchi(createPet(name));
+        createGameDiv(name);
       }
     }
 
