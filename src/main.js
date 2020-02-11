@@ -36,7 +36,7 @@ $(document).ready(function(){
     pet.setStats();
     setInterval(() => {
       updateStats(pet);
-    }, 1000);
+    }, 5000);
 
   });
 

@@ -20,7 +20,7 @@ export class Tamagotchi {
       this.happiness.value -= 5;
       this.statsArray = [this.energy, this.hunger, this.fatigue, this.happiness];
       this.checkStats();
-    }, 1000);
+    }, 5000);
   }
 
   feed(){
@@ -52,7 +52,6 @@ export class Tamagotchi {
     for (let i = 0; i < this.statsArray.length; i++) {
       this.statsArray[i].value = this.checkRange(this.statsArray[i].value);
       if (this.statsArray[i].value === this.statsArray[i].limit) {
-        console.log("it was low in hunger or fatigue");
         deathStatCount++;
       } else if (this.statsArray[i].limit === 100 && this.statsArray[i].value >= 90) {
         console.log("low stats!");
@@ -61,12 +60,9 @@ export class Tamagotchi {
       }
     }
     if (deathStatCount >= 2) {
-      console.log("Pet's dead");
       this.isDead = true;
       clearInterval(timer);
-    } else{
-      console.log("all is good");
-    }
+    } 
   }
 
   checkRange(value){
