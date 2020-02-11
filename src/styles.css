@@ -1,7 +1,7 @@
 #pet-image {
   min-width: 400px;
   min-height: 400px;
-  background-image: url("../src/img/pooping-pet.gif");
+  /* background-image: url("../src/img/pooping-pet.gif"); */
   background-repeat: no-repeat;
   margin-bottom: 20px;
   border: 2px solid red;
