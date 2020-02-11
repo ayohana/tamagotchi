@@ -13,6 +13,7 @@ function updateStats(pet){
   if(pet.isDead){
     $(`#pet${pet.id}PetMessage`).text("Your pet has died.");
     $(`#pet${pet.id}buttonSection`).hide();
+    pet.stopTimer();
     $("#gameOver").show();
   } else{
     $(`#pet${pet.id}PetMessage`).text("");
@@ -154,8 +155,8 @@ $(document).ready(function(){
 
       for (let i = 0; i <= petCount-1; i++) {
         let name = `pet${i}`;
-        game.addTamagotchi(createPet(name));
         createGameDiv(name);
+        game.addTamagotchi(createPet(name));
       }
 
       $(".feedButton").click(function(event){

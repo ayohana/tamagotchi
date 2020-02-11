@@ -27,7 +27,11 @@ export class Tamagotchi {
       this.happiness.value -= 5;
       this.statsArray = [this.energy, this.hunger, this.fatigue, this.happiness];
       this.checkStats();
-    }, 5000);
+    }, 2000);
+  }
+
+  stopTimer() {
+    clearInterval(timer);
   }
 
   feed(){
@@ -68,7 +72,8 @@ export class Tamagotchi {
     }
     if (deathStatCount >= 2) {
       this.isDead = true;
-      clearInterval(timer);
+      console.log(timer);
+      ///clearInterval(timer);
     } 
   }
 
