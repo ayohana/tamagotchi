@@ -5,7 +5,9 @@
   background-repeat: no-repeat;
   margin-bottom: 20px;
   border: 2px solid red;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #gameOver, #buttonRow {

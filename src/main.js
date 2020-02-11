@@ -20,45 +20,54 @@ function updateStats(pet){
   }
 }
 
+function createPet(pet) {
+  pet = new Tamagotchi();
+
+  $("#startScreen").hide();
+  $("#gameScreen").show();
+  $("#buttonRow").show();
+  $("#gameOver").hide();
+
+  updateStats(pet);
+  pet.setStats();
+  setInterval(() => {
+    updateStats(pet);
+  }, 5000);
+
+  let request = new XMLHttpRequest();
+  const url = `https://api.giphy.com/v1/gifs/random?api_key=${process.env.API_KEY}&tag=tamagotchi&rating=PG-13`;
+
+  request.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      const response = JSON.parse(this.responseText);
+      getElements(response);
+    }
+  };
+
+  request.open("GET", url, true);
+  request.send();
+
+  const getElements = function(response) {
+    let image = new Image();
+    image.id = "petGif";
+    image.src = response.data.images.downsized_large.url;
+    $("#pet-image").append(image);
+  };
+}
+
 $(document).ready(function(){
   let pet;
 
   $("#startButton").click(function(event){
     event.preventDefault();
-    pet = new Tamagotchi();
 
-    $("#startScreen").hide();
-    $("#gameScreen").show();
-    $("#buttonRow").show();
-    $("#gameOver").hide();
- 
-    updateStats(pet);
-    pet.setStats();
-    setInterval(() => {
-      updateStats(pet);
-    }, 5000);
+    const numberOfPets = document.getElementById("numberOfPets");
 
-    let request = new XMLHttpRequest();
-    const url = `https://api.giphy.com/v1/gifs/random?api_key=${process.env.API_KEY}&tag=tamagotchi&rating=PG-13`;
-
-    request.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
-        const response = JSON.parse(this.responseText);
-        getElements(response);
-      }
-    };
-
-    request.open("GET", url, true);
-    request.send();
-
-    const getElements = function(response) {
-      let image = new Image();
-      image.id = "petGif";
-      image.src = response.data.images.downsized_large.url;
-      console.log(response.data.images.downsized_large.url);
-      console.log("updated img props", image);
-      $("#pet-image").append(image);
-    };
+    if (!numberOfPets.checkValidity()) {
+      console.error("Enter a valid number!");
+    } else {
+      createPet(pet);
+    }
 
   });
 
