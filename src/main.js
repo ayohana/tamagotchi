@@ -5,7 +5,7 @@ import $ from 'jquery';
 import { Tamagotchi } from '../src/tamagotchi';
 import { Game } from '../src/game';
 
-function updateStats(pet){
+function updateStats(pet, game){
   $(`#pet${pet.id}Energy`).text(pet.energy.value);
   $(`#pet${pet.id}Hunger`).text(pet.hunger.value);
   $(`#pet${pet.id}Fatigue`).text(pet.fatigue.value);
@@ -13,24 +13,39 @@ function updateStats(pet){
   if(pet.isDead){
     $(`#pet${pet.id}PetMessage`).text("Your pet has died.");
     $(`#pet${pet.id}buttonSection`).hide();
+    console.log("this pet is dead", pet);
     pet.stopTimer();
-    $("#gameOver").show();
   } else{
     $(`#pet${pet.id}PetMessage`).text("");
     $(`#pet${pet.id}buttonSection`).show();
-    $("#gameOver").hide();
+  }
+  checkGameOver(game);
+}
+
+function checkGameOver(game){
+  if (game.checkAllDead()){
+    $("#gameOver").show();
+    clearInterval();
+  } else {
+    $("#gameOver").hide(); 
   }
 }
 
-function createPet(pet) {
+function createPet(pet, game) {
   pet = new Tamagotchi();
+  pet.assignID();
 
-  updateStats(pet);
+  updateStats(pet, game);
   pet.setStats();
-  setInterval(() => {
-    updateStats(pet);
-  }, 5000);
-
+  let interval = setInterval(() => {
+    if (pet.isDead){
+      updateStats(pet, game);
+      pet.stopTimer();
+      clearInterval(interval);
+    } else {
+    updateStats(pet, game);
+    }
+  }, 2000);
   return pet;
 }
 
@@ -88,7 +103,7 @@ function createGameDiv(name){
   let buttonColDiv = createButtonElements(name);
   buttonSectionDiv.appendChild(buttonColDiv);
 
-  $("#moreGames").append(gameScreenDiv);
+  $("#gameScreen").append(gameScreenDiv);
 }
 
 function createStatsElements(name){
@@ -135,7 +150,6 @@ function createButtonElements(name){
 }
 
 $(document).ready(function(){
-  let pet;
   let game = new Game();
 
   $("#startButton").click(function(event){
@@ -156,7 +170,7 @@ $(document).ready(function(){
       for (let i = 0; i <= petCount-1; i++) {
         let name = `pet${i}`;
         createGameDiv(name);
-        game.addTamagotchi(createPet(name));
+        game.addTamagotchi(createPet(name, game));
       }
 
       $(".feedButton").click(function(event){
@@ -165,7 +179,7 @@ $(document).ready(function(){
 
         let petObject = game.findTamagotchi(stringID);
         petObject.feed();
-        updateStats(petObject);
+        updateStats(petObject, game);
       });
 
       $(".playButton").click(function(event){
@@ -174,7 +188,7 @@ $(document).ready(function(){
 
         let petObject = game.findTamagotchi(stringID);
         petObject.play();
-        updateStats(petObject);
+        updateStats(petObject, game);
       });
     
       $(".sleepButton").click(function(event){
@@ -183,7 +197,7 @@ $(document).ready(function(){
 
         let petObject = game.findTamagotchi(stringID);
         petObject.sleep();
-        updateStats(petObject);
+        updateStats(petObject, game);
       });
 
 
@@ -191,15 +205,13 @@ $(document).ready(function(){
 
   });
 
-  
-
-  
 
   $("#restartGame").click(function(event){
     event.preventDefault();
     $("#startScreen").show();
+    $("#gameScreen").empty();
     $("#gameScreen").hide();
     $("#gameOver").hide();
-    pet.isDead = false;
+    game = new Game();
   });  
 });

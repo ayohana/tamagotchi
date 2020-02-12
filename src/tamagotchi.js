@@ -1,3 +1,5 @@
+// TO-DO: reset idCount between restarting games!
+
 import { Stats } from '../src/stats';
 
 let timer;
@@ -72,8 +74,6 @@ export class Tamagotchi {
     }
     if (deathStatCount >= 2) {
       this.isDead = true;
-      console.log(timer);
-      ///clearInterval(timer);
     } 
   }
 
